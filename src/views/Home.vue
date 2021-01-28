@@ -2,8 +2,8 @@
   <ion-page>
     <ion-content :fullscreen="true">
       <div id="container">
-        <h1>Pehchan Client App!</h1>
-        <ion-button @click="doPehchanLogin">Log in with Pehchan</ion-button>
+        <h1>Super App</h1>
+        <ion-button class="mt1 btn-green" @click="doPehchanLogin">Log in with Pehchan</ion-button>
       </div>
     </ion-content>
   </ion-page>
@@ -33,14 +33,20 @@ export default defineComponent({
 </script>
 
 <style scoped>
+h1 {
+  color: #005741;
+  font-size: 2em;
+  font-weight: bold;
+}
+
 #container {
   text-align: center;
   
   position: absolute;
   left: 0;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 40%;
+  transform: translateY(-40%);
 }
 
 #container strong {

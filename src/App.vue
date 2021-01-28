@@ -16,3 +16,12 @@ export default defineComponent({
   }
 });
 </script>
+
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/NaurozAhmad/CSSMarginPaddingClasses/margin-padding-classes.css');
+
+  .btn-green {
+    --background: #005741;
+    --background-activated: #018362;
+  }
+</style>
