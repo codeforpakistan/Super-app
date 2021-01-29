@@ -2,6 +2,7 @@
   <ion-page>
     <ion-content :fullscreen="true">
       <div id="container">
+        <img style="max-width: 7em;" src="assets/superapplogo.png">
         <h1>Super App</h1>
         <ion-button class="mt1 btn-green" @click="doPehchanLogin">Log in with Pehchan</ion-button>
       </div>
