@@ -23,6 +23,9 @@
     "typescript": "~3.9.3",
     "vue-router": "^4.0.0-0",
     "@vue/cli-plugin-babel": "~4.5.0",
+    "ionic": "^5.4.0"
+  },
+  "devDependencies": {
     "@capacitor/cli": "2.4.6",
     "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
@@ -37,9 +40,7 @@
     "@vue/test-utils": "^2.0.0-0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",
-    "vue-jest": "^5.0.0-0",
-    "ionic": "^5.4.0"
+    "vue-jest": "^5.0.0-0"
   },
-  "devDependencies": {},
   "description": "An Ionic project"
 }
