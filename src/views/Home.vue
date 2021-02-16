@@ -26,7 +26,8 @@ export default defineComponent({
     return {
       doPehchanLogin() {
         console.log('do pehchan login called');
-        Browser.open({ url: 'https://pehchan-auth-client.herokuapp.com/' });
+        // Browser.open({ url: 'http://localhost:8080/?redirectUrl=http://localhost:8100/home&appName=Super App' });
+        Browser.open({ url: 'https://pehchan-auth-client.herokuapp.com/?redirectUrl=https://superappcfp.herokuapp.com/home&appName=Super App' });
       }
     }
   }
