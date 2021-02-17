@@ -4,15 +4,16 @@
       <div id="container">
         <img style="max-width: 7em;" src="assets/superapplogo.png">
         <h1>Super App</h1>
-        <ion-button class="mt1 btn-green" @click="doPehchanLogin">Log in with Pehchan</ion-button>
+        <ion-button v-if="!url" class="mt1 btn-green" @click="doPehchanLogin">Log in with Pehchan</ion-button>
+        <p v-if="url">Session created. Token: {{url}}</p>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { Browser } from "@capacitor/core";
 import { IonContent, IonPage, IonButton } from '@ionic/vue';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -22,12 +23,28 @@ export default defineComponent({
     IonPage,
     IonButton
   },
-  setup() {
+  methods: {
+    doPehchanLogin: function() {
+      console.log('do pehchan login called', this.url);
+      const loginApp = InAppBrowser.create('https://oauth.pehchaan.kpgov.tech/oauth2/code', '_self');
+      loginApp.on('exit').subscribe(event => {
+        console.log("inAppBrowser is closed now", event);
+      });
+      loginApp.on('loadstop').subscribe(event => {
+        console.log("loadstop called", event);
+      });
+      loginApp.on('loadstart').subscribe(event => {
+        const callBackURL = 'https://oauth.pehchaan.kpgov.tech/callback?code=';
+        if (event.url.includes(callBackURL) && event.url.length > callBackURL.length) {
+          this.url = event.url.split('code=')[1];
+          loginApp.close();
+        }
+      });
+    }
+  },
+  data: function () {
     return {
-      doPehchanLogin() {
-        console.log('do pehchan login called');
-        Browser.open({ url: 'https://pehchan-auth-client.herokuapp.com/' });
-      }
+      url: '',
     }
   }
 });
