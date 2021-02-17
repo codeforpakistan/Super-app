@@ -1,5 +1,6 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import { Plugins } from '@capacitor/core';
+import App from './App.vue';
 import router from './router';
 
 import { IonicVue } from '@ionic/vue';
@@ -23,6 +24,8 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+const { CapacitorApp } = Plugins;
+
 const app = createApp(App)
   .use(IonicVue)
   .use(router);
@@ -30,3 +33,15 @@ const app = createApp(App)
 router.isReady().then(() => {
   app.mount('#app');
 });
+
+CapacitorApp.addListener('appUrlOpen', function(data: any) {
+  console.log('appUrlOpen listened', data);
+  // example url superappcfp.herokuapp.com/verified
+  const slug = data.url.split('.app').pop();
+  console.log('got slug', slug);
+  if (slug) {
+    router.push({
+      path: slug,
+    });
+  }
+})
