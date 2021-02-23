@@ -1,5 +1,20 @@
 <template>
   <ion-app>
+    <ion-toolbar>
+      <ion-buttons slot="secondary">
+        <ion-button fill="outline">
+          <ion-icon slot="start" :icon="star"></ion-icon>
+          Star
+        </ion-button>
+      </ion-buttons>
+      <ion-title>Super App</ion-title>
+      <ion-buttons slot="primary">
+        <ion-button color="danger" fill="outline">
+          Edit
+          <ion-icon slot="end" :icon="create"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
     <ion-router-outlet />
   </ion-app>
 </template>

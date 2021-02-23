@@ -1,56 +1,85 @@
 <template>
   <ion-page>
-    <ion-content :fullscreen="true">
-      <div id="container">
-        <img style="max-width: 7em;" src="assets/superapplogo.png">
-        <h1>Super App</h1>
-        <ion-button v-if="!url" class="mt1 btn-green" @click="doPehchanLogin">Log in with Pehchan</ion-button>
-        <p v-if="url">Session created. Token: {{url}}</p>
-      </div>
+    <ion-content class="content" :fullscreen="true">
+      <ion-tabs @ionTabsWillChange="beforeTabChange" @ionTabsDidChange="afterTabChange">
+        <ion-tab-bar slot="top">
+          <ion-tab-button tab="services" href="/services">
+            <ion-icon :icon="calendar"></ion-icon>
+            <ion-label>Services</ion-label>
+          </ion-tab-button>
+          <ion-tab-button tab="guides" href="/guides">
+            <ion-icon :icon="bookOutline"></ion-icon>
+            <ion-label>Guides</ion-label>
+          </ion-tab-button>
+          <ion-tab-button tab="departments" href="/departments">
+            <ion-icon :icon="personCircle"></ion-icon>
+            <ion-label>Departments</ion-label>
+          </ion-tab-button>
+        </ion-tab-bar>
+      </ion-tabs>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { IonContent, IonPage, IonButton } from '@ionic/vue';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { IonContent,
+  IonPage,
+  IonIcon, 
+  IonLabel, 
+  IonTabBar, 
+  IonTabButton, 
+  IonTabs
+} from '@ionic/vue';
 import { defineComponent } from 'vue';
+import { calendar, personCircle, bookOutline } from 'ionicons/icons';
 
 export default defineComponent({
   name: 'Home',
   components: {
     IonContent,
     IonPage,
-    IonButton
+    IonIcon, 
+    IonLabel, 
+    IonTabBar, 
+    IonTabButton, 
+    IonTabs,
   },
-  methods: {
-    doPehchanLogin: function() {
-      console.log('do pehchan login called', this.url);
-      const loginApp = InAppBrowser.create('https://oauth.pehchaan.kpgov.tech/oauth2/code', '_blank', 'location=no, hidden=no, clearcache=yes');
-      loginApp.on('exit').subscribe(event => {
-        console.log("inAppBrowser is closed now", event);
-      });
-      loginApp.on('loadstop').subscribe(event => {
-        console.log("loadstop called", event);
-      });
-      loginApp.on('loadstart').subscribe(event => {
-        const callBackURL = 'https://oauth.pehchaan.kpgov.tech/callback?code=';
-        if (event.url.includes(callBackURL) && event.url.length > callBackURL.length) {
-          this.url = event.url.split('code=')[1];
-          loginApp.close();
-        }
-      });
+  setup() {
+    const beforeTabChange = () => {
+      // do something before tab change
+    }
+    const afterTabChange = () => {
+      // do something after tab change
+    }
+    return {
+      calendar,
+      personCircle,
+      bookOutline,
+      beforeTabChange,
+      afterTabChange
     }
   },
   data: function () {
     return {
-      url: '',
+      session: {accessToken: ''},
     }
-  }
+  },
+  ionViewDidEnter() {
+    console.log('Home page did enter');
+    const token = localStorage.getItem('accessToken');
+    this.session.accessToken = token || '';
+    console.log('token', this.session)
+    if (token) {
+      this.$router.push({name: 'Services'});
+    }
+  },
 });
 </script>
 
 <style scoped>
+ion-tab-bar{
+  margin-top: 55px;
+}
 h1 {
   color: #005741;
   font-size: 2em;
