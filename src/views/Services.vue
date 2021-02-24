@@ -1,18 +1,84 @@
 <template>
   <ion-page>
-    <ion-content :fullscreen="true">
-      <div id="container">
-        <img style="max-width: 7em;" src="assets/superapplogo.png">
-        <h1>Services page</h1>
-      </div>
+    <ion-content>
+      <!-- Popular Services-->
+      <ion-grid class="mt2 mb1 border-bottom">
+        <label class="heading-label ml1">Popular Services</label>
+        <ion-row>
+          <ion-col>
+            <ion-row style="display: block">
+              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
+            </ion-row>
+            <ion-label>License Verification</ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-row style="display: block">
+              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
+            </ion-row>
+            <ion-label>Building Approval</ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-row style="display: block">
+              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
+            </ion-row>
+            <ion-label>CNIC</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <!-- informational Services-->
+      <ion-grid class="mt1 mb1 border-bottom">
+        <label class="heading-label ml1">Informational Services</label>
+        <ion-row>
+          <ion-col>
+            <ion-row style="display: block">
+              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
+            </ion-row>
+            <ion-label>CNIC</ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-row style="display: block">
+              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
+            </ion-row>
+            <ion-label>Passport</ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-row style="display: block">
+              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
+            </ion-row>
+            <ion-label>Vehicle Registration</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <!-- Transactional services -->
+      <ion-grid class="mt1 mb1">
+        <label class="heading-label ml1">Informational Services</label>
+        <ion-row>
+          <ion-col>
+            <ion-row style="display: block">
+              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
+            </ion-row>
+            <ion-label>Water Bill</ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-row style="display: block">
+              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
+            </ion-row>
+            <ion-label>Gas Bill</ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-row style="display: block">
+              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
+            </ion-row>
+            <ion-label>Telephone Bill</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { IonContent,
-  IonPage,
-} from '@ionic/vue';
+import { IonContent, IonPage, IonRow, IonCol, IonGrid, IonLabel } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -20,6 +86,10 @@ export default defineComponent({
   components: {
     IonContent,
     IonPage,
+    IonRow,
+    IonGrid,
+    IonCol,
+    IonLabel
   },
   data: function () {
     return {
@@ -28,42 +98,23 @@ export default defineComponent({
   },
   ionViewDidEnter() {
     console.log('Services page did enter');
-  },
+  }
 });
 </script>
-
 <style scoped>
-h1 {
-  color: #005741;
-  font-size: 2em;
-  font-weight: bold;
+.ion-page {
+  padding: 0px 10px;
 }
-
-#container {
+.heading-label {
+  font-weight: 500;
+}
+.border-bottom {
+  border-bottom: .5px solid gainsboro;
+}
+ion-col {
+  padding: 15px;
+  font-size: .9rem;
   text-align: center;
-  
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 40%;
-  transform: translateY(-40%);
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-  
-  color: #8c8c8c;
-  
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
-}
 </style>

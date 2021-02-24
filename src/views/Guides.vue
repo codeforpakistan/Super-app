@@ -45,8 +45,8 @@ h1 {
   position: absolute;
   left: 0;
   right: 0;
-  top: 40%;
-  transform: translateY(-40%);
+  top: 35%;
+  transform: translateY(-35%);
 }
 
 #container strong {

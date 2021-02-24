@@ -28,10 +28,10 @@ import { IonContent,
   IonLabel, 
   IonTabBar, 
   IonTabButton, 
-  IonTabs
+  IonTabs,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import { calendar, personCircle, bookOutline } from 'ionicons/icons';
+import { calendar, personCircle, bookOutline, addCircle } from 'ionicons/icons';
 
 export default defineComponent({
   name: 'Home',
@@ -64,6 +64,11 @@ export default defineComponent({
       session: {accessToken: ''},
     }
   },
+  methods: {
+    isActiveTab: function(name: string) {
+      return name === this.$route.name;
+    }
+  },
   ionViewDidEnter() {
     console.log('Home page did enter');
     const token = localStorage.getItem('accessToken');
@@ -79,7 +84,13 @@ export default defineComponent({
 <style scoped>
 ion-tab-bar{
   margin-top: 55px;
+  padding-bottom: 10px;
 }
+
+.active-tab {
+  border-bottom: 1px solid !important;
+}
+
 h1 {
   color: #005741;
   font-size: 2em;
