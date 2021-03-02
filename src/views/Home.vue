@@ -2,16 +2,16 @@
   <ion-page>
     <ion-content class="content" :fullscreen="true">
       <ion-tabs @ionTabsWillChange="beforeTabChange" @ionTabsDidChange="afterTabChange">
-        <ion-tab-bar slot="top">
-          <ion-tab-button tab="services" href="/services">
+        <ion-tab-bar slot="top" style="border-bottom: none;">
+          <ion-tab-button v-bind:style="isActiveTab('Services') ? 'border-bottom: 2px solid;' : 'border-bottom: .5px solid;'" tab="services" href="/services">
             <ion-icon :icon="calendar"></ion-icon>
             <ion-label>Services</ion-label>
           </ion-tab-button>
-          <ion-tab-button tab="guides" href="/guides">
+          <ion-tab-button v-bind:style="isActiveTab('Guides') ? 'border-bottom: 2px solid;' : 'border-bottom: .5px solid;'"  tab="guides" href="/guides">
             <ion-icon :icon="bookOutline"></ion-icon>
             <ion-label>Guides</ion-label>
           </ion-tab-button>
-          <ion-tab-button tab="departments" href="/departments">
+          <ion-tab-button v-bind:style="isActiveTab('Departments') ? 'border-bottom: 2px solid;' : 'border-bottom: .5px solid;'"  tab="departments" href="/departments">
             <ion-icon :icon="personCircle"></ion-icon>
             <ion-label>Departments</ion-label>
           </ion-tab-button>
@@ -82,7 +82,7 @@ export default defineComponent({
 
 <style scoped>
 ion-tab-bar{
-  margin-top: 55px;
+  margin-top: 50px;
   padding-bottom: 10px;
 }
 

@@ -40,7 +40,12 @@
             </ion-row>
           </div>
         </div>
-       
+        <div class="home-btn" v-if="data.dlNumber">
+          <ion-button href="/">
+            <ion-icon slot="start" :icon="arrowBack"></ion-icon>
+            Home Page
+          </ion-button>
+        </div>
       </div>
     </ion-content>
   </ion-page>
@@ -51,6 +56,7 @@ import { IonContent,
   IonPage,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
+import { arrowBack } from 'ionicons/icons';
 
 export default defineComponent({
   name: 'Result',
@@ -61,6 +67,11 @@ export default defineComponent({
   data() {
     return {
       data: {},
+    }
+  },
+  setup() {
+    return {
+      arrowBack
     }
   },
   ionViewDidEnter() {
