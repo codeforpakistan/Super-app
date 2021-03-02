@@ -5,7 +5,7 @@
       <ion-grid class="mt2 mb1 border-bottom">
         <label class="heading-label ml1">Popular Services</label>
         <ion-row>
-          <ion-col>
+          <ion-col @click="openLicenseVerification">
             <ion-row style="display: block">
               <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
             </ion-row>
@@ -51,7 +51,7 @@
       </ion-grid>
       <!-- Transactional services -->
       <ion-grid class="mt1 mb1">
-        <label class="heading-label ml1">Informational Services</label>
+        <label class="heading-label ml1">Transactional Services</label>
         <ion-row>
           <ion-col>
             <ion-row style="display: block">
@@ -94,6 +94,11 @@ export default defineComponent({
   data: function () {
     return {
       somekey: '',
+    }
+  },
+  methods: {
+    openLicenseVerification: function(name: string) {
+      this.$router.push({name: 'LicenseVerification'});
     }
   },
   ionViewDidEnter() {

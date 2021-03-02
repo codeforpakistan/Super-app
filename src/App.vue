@@ -1,22 +1,26 @@
 <template>
   <ion-app>
     <ion-toolbar>
-      <ion-buttons slot="start">
+      <ion-buttons  v-if="hasSession && backButtonRoutes.indexOf(currentRoute) == -1" slot="start">
         <ion-menu-button auto-hide="false"></ion-menu-button>
       </ion-buttons>
-      <ion-buttons slot="end">
+      <ion-buttons  v-if="hasSession && backButtonRoutes.indexOf(currentRoute) > -1" slot="start" @click="goBack">
+        <ion-button>
+          <img class="icon" style="max-width: 7em;" width="20" height="20" src="assets/icon/arrow-back-outline.svg">
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons  v-if="hasSession" slot="end">
         <ion-button>
           <img class="icon" style="max-width: 7em;" width="20" height="20" src="assets/icon/search-outline.svg">
         </ion-button>
       </ion-buttons>
-      <ion-buttons slot="end">
+      <ion-buttons v-if="hasSession" slot="end">
         <ion-button @click="logout">
           <img class="icon" style="max-width: 7em;" width="20" height="20" src="assets/icon/log-out-outline.svg">
         </ion-button>
       </ion-buttons>
       <ion-title>Super App</ion-title>
     </ion-toolbar>
-
     <ion-router-outlet />
   </ion-app>
 </template>
@@ -35,22 +39,34 @@ export default defineComponent({
   },
   methods: {
     logout: function () {
-      console.log('logout hit');
       localStorage.removeItem('session');
       localStorage.removeItem('accessToken');
+      this.session.accessToken = '';
       this.$router.replace('Login');
+      window.location.reload();
+    },
+    goBack: function() {
+      this.$router.back();
     }
   },
   data: function () {
     return {
-      session: {accessToken: ''},
+      session: { accessToken: ''},
+      backButtonRoutes: ['LicenseVerification', 'Result']
+    }
+  },
+  computed: {
+    hasSession() {
+      const token = localStorage.getItem('accessToken');
+      return token && token !== '' && token !== null ? true : false;
+    },
+    currentRoute: function () {
+      return this.$route.name;
     }
   },
   ionViewDidEnter() {
-    console.log('Guides page did enter');
     const token = localStorage.getItem('accessToken');
     this.session.accessToken = token || '';
-    console.log('token11', this.session.accessToken);
   }
 });
 </script>

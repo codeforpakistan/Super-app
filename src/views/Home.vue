@@ -31,7 +31,7 @@ import { IonContent,
   IonTabs,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import { calendar, personCircle, bookOutline, addCircle } from 'ionicons/icons';
+import { calendar, personCircle, bookOutline } from 'ionicons/icons';
 
 export default defineComponent({
   name: 'Home',
@@ -70,10 +70,9 @@ export default defineComponent({
     }
   },
   ionViewDidEnter() {
-    console.log('Home page did enter');
+    console.log('Home page did enter', process.env.VUE_APP_REHNUMA_API);
     const token = localStorage.getItem('accessToken');
     this.session.accessToken = token || '';
-    console.log('token', this.session)
     if (token) {
       this.$router.push({name: 'Services'});
     }

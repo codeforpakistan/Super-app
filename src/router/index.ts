@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
+import LicenseVerification from '../views/partials/LicenseVerification.vue';
+import Result from '../views/partials/Result.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -30,6 +32,19 @@ const routes: Array<RouteRecordRaw> = [
     path: '/login',
     name: 'Login',
     component: Login,
+  },
+  {
+    path: '/license-verification',
+    name: 'LicenseVerification',
+    component: LicenseVerification,
+  },
+  {
+    path: '/result',
+    name: 'Result',
+    component: Result,
+    meta: {
+      data: null
+    }
   },
   {
     path: '/:catchAll(.*)',

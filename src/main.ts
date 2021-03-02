@@ -35,10 +35,8 @@ router.isReady().then(() => {
 });
 
 CapacitorApp.addListener('appUrlOpen', function(data: any) {
-  console.log('appUrlOpen listened', data);
   // example url superappcfp.herokuapp.com/verified
   const slug = data.url.split('.app').pop();
-  console.log('got slug', slug);
   if (slug) {
     router.push({
       path: slug,

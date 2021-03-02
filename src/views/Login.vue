@@ -24,7 +24,8 @@ export default defineComponent({
   },
   methods: {
     doPehchanLogin: function() {
-      console.log('do pehchan login called', this.token);
+      // for browser
+      // localStorage.setItem('accessToken', 'data.token.access_token'); // for web dev
       const loginApp = InAppBrowser.create('https://oauth.pehchaan.kpgov.tech/oauth2/code', '_blank', 'location=no, hidden=no, clearcache=yes');
       loginApp.on('exit').subscribe(event => {
         console.log('inAppBrowser is closed now', event);
@@ -56,6 +57,7 @@ export default defineComponent({
             if (this.session) {
               console.log('want to redirect');
               this.$router.replace('Home');
+              window.location.reload();
             }
           });
         }
