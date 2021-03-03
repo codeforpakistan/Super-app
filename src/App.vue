@@ -1,33 +1,72 @@
 <template>
   <ion-app>
+    <!-- action bar -->
     <ion-toolbar>
-      <ion-buttons  v-if="hasSession && backButtonRoutes.indexOf(currentRoute) == -1" slot="start">
+      <ion-buttons v-if="hasSession && backButtonRoutes.indexOf(currentRoute) == -1" slot="start">
         <ion-menu-button auto-hide="false"></ion-menu-button>
       </ion-buttons>
       <ion-buttons  v-if="hasSession && backButtonRoutes.indexOf(currentRoute) > -1" slot="start" @click="goBack">
         <ion-button>
-          <img class="icon" style="max-width: 7em;" width="20" height="20" src="assets/icon/arrow-back-outline.svg">
+          <ion-icon slot="start" class="md-icon" :icon="arrowBack"></ion-icon>
         </ion-button>
       </ion-buttons>
-      <ion-buttons  v-if="hasSession" slot="end">
-        <ion-button>
-          <img class="icon" style="max-width: 7em;" width="20" height="20" src="assets/icon/search-outline.svg">
+      <!-- search bar -->
+      <ion-buttons  v-if="hasSession && searchActive" slot="end">
+        <ion-button @click="toggleSearchBar">
+          <ion-icon slot="start" class="md-icon" :icon="close"></ion-icon>
         </ion-button>
       </ion-buttons>
-      <ion-buttons v-if="hasSession" slot="end">
-        <ion-button @click="logout">
-          <img class="icon" style="max-width: 7em;" width="20" height="20" src="assets/icon/log-out-outline.svg">
+      <ion-searchbar v-if="hasSession && searchActive" debounce="500" type="text" color="light"
+      placeholder="Search text" clearInput>
+      <!-- search end -->
+      </ion-searchbar>
+      <ion-buttons  v-if="hasSession && !searchActive" slot="end">
+        <ion-button @click="toggleSearchBar">
+          <ion-icon slot="start" class="md-icon" :icon="search"></ion-icon>
         </ion-button>
       </ion-buttons>
-      <ion-title>Super App</ion-title>
+      <ion-buttons v-if="hasSession && !searchActive" slot="end">
+        <ion-button href="/logout">
+        <ion-icon slot="start" class="md-icon" :icon="logOut"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title v-if="!searchActive">Super App</ion-title>
     </ion-toolbar>
-    <ion-router-outlet />
+    <!-- side menu -->
+    <ion-menu side="start" menu-id="first" content-id="main">
+      <ion-header>
+        <ion-toolbar class="menu-header" color="primary">
+          <ion-title style="color: white;">Ali Ahmad</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list class="mt1" lines="none">
+          <ion-item href="/">
+            <ion-icon slot="start" class="sm-icon" :icon="home"></ion-icon>Home
+          </ion-item>
+          <ion-item><ion-icon slot="start" class="sm-icon" :icon="personCircle"></ion-icon>My Profile</ion-item>
+          <ion-item><ion-icon slot="start" class="sm-icon" :icon="informationCircle"></ion-icon>About Us</ion-item>
+          <ion-item><ion-icon slot="start" class="sm-icon" :icon="lockClosed"></ion-icon>Privacy Policy</ion-item>
+          <ion-item href="/logout"><ion-icon slot="start" class="sm-icon" :icon="logOut"></ion-icon>Logout</ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <!-- router -->
+    <ion-router-outlet id="main" />
   </ion-app>
 </template>
-
 <script lang="ts">
-import { IonApp, IonRouterOutlet, IonToolbar, IonButton } from '@ionic/vue';
+import { IonApp, IonRouterOutlet, IonToolbar, IonButton,
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonList,
+  IonMenu,
+  IonTitle,
+  IonSearchbar,
+} from '@ionic/vue';
 import { defineComponent } from 'vue';
+import { home, personCircle, informationCircle, lockClosed, logOut, arrowBack, search, close } from 'ionicons/icons';
 
 export default defineComponent({
   name: 'App',
@@ -36,6 +75,25 @@ export default defineComponent({
     IonRouterOutlet,
     IonToolbar,
     IonButton,
+    IonContent, 
+    IonHeader, 
+    IonItem, 
+    IonList, 
+    IonMenu, 
+    IonTitle, 
+    IonSearchbar,
+  },
+  setup() {
+    return {
+      home,
+      personCircle,
+      informationCircle,
+      lockClosed,
+      logOut,
+      arrowBack,
+      search,
+      close
+    }
   },
   methods: {
     logout: function () {
@@ -47,12 +105,16 @@ export default defineComponent({
     },
     goBack: function() {
       this.$router.back();
+    },
+    toggleSearchBar: function() {
+      this.searchActive = !this.searchActive;
     }
   },
   data: function () {
     return {
       session: { accessToken: ''},
-      backButtonRoutes: ['LicenseVerification', 'Result']
+      backButtonRoutes: ['LicenseVerification', 'Result'],
+      searchActive: false,
     }
   },
   computed: {
@@ -84,6 +146,44 @@ export default defineComponent({
     padding-left: 50px;
   }
   ion-toolbar {
-    padding: 0px 10px !important;
+    padding: 0px 5px !important;
   }
+  ion-item {
+    font-size: .95rem;
+    color: rgb(97, 97, 97);
+    font-weight: 450;
+    padding: 5px 0px !important;
+  }
+  .sm-icon {
+    color: rgb(97, 97, 97);
+    width: 1.1rem;
+    margin-right: 10px;
+  }
+  .md-icon {
+    color: var(--md-color-primary) !important;
+    width: 1.3rem;
+    margin-right: 10px;
+  }
+  .menu-header {
+    padding: 25px 5px !important;
+  }
+  .menu-header ion-title {
+    color: white !important;
+    font-weight: 450 !important;
+    font-size: 1.1rem !important;
+    padding: 15px !important;
+  }
+  ion-searchbar {
+    height: 32px !important;
+    color: #005741 !important;
+    padding-bottom: 0px !important;
+    padding: 0 !important;
+    margin-top: 0px !important;
+  }
+  /* :host(.toolbar-searchbar) .toolbar-container {
+    padding-top: 3px !important;
+  }
+  .toolbar-container {
+    padding-top: 3px !important;
+  } */
 </style>
