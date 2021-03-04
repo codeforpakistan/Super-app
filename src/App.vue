@@ -2,7 +2,7 @@
   <ion-app>
     <!-- action bar -->
     <ion-toolbar>
-      <ion-buttons v-if="hasSession && backButtonRoutes.indexOf(currentRoute) == -1" slot="start">
+      <ion-buttons style="color: #005741" v-if="hasSession && backButtonRoutes.indexOf(currentRoute) == -1" slot="start">
         <ion-menu-button auto-hide="false"></ion-menu-button>
       </ion-buttons>
       <ion-buttons  v-if="hasSession && backButtonRoutes.indexOf(currentRoute) > -1" slot="start" @click="goBack">
@@ -16,7 +16,7 @@
           <ion-icon slot="start" class="md-icon" :icon="close"></ion-icon>
         </ion-button>
       </ion-buttons>
-      <ion-searchbar v-if="hasSession && searchActive" debounce="500" type="text" color="light"
+      <ion-searchbar v-if="hasSession && searchActive" debounce="500" type="text" style="border-radius: 7px; background: #F8F8F8;"
       placeholder="Search text" clearInput>
       <!-- search end -->
       </ion-searchbar>
@@ -155,12 +155,12 @@ export default defineComponent({
     padding: 5px 0px !important;
   }
   .sm-icon {
-    color: rgb(97, 97, 97);
+    color: rgb(97, 97, 97) !important;
     width: 1.1rem;
     margin-right: 10px;
   }
   .md-icon {
-    color: var(--md-color-primary) !important;
+    color: #005741 !important;
     width: 1.3rem;
     margin-right: 10px;
   }
@@ -180,10 +180,4 @@ export default defineComponent({
     padding: 0 !important;
     margin-top: 0px !important;
   }
-  /* :host(.toolbar-searchbar) .toolbar-container {
-    padding-top: 3px !important;
-  }
-  .toolbar-container {
-    padding-top: 3px !important;
-  } */
 </style>

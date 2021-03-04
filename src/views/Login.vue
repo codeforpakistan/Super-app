@@ -31,7 +31,11 @@ export default defineComponent({
         console.log('inAppBrowser is closed now', event);
       });
       loginApp.on('loadstart').subscribe(event => {
-        console.log('loadstart called', event);
+        // close the browser when user cancels the login/signup process
+        const closeBrowserURL = 'https://oauth.pehchaan.kpgov.tech/cancel-auth';
+        if (event.url.includes(closeBrowserURL)) {
+          loginApp.close();
+        }
       });
       loginApp.on('loadstop').subscribe(event => {
         console.log('loadstop called', event);
