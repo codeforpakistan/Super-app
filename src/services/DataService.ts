@@ -14,5 +14,29 @@ service.getLicenseDetails = async (cnic: string) => {
   }
 }
 
+service.getChallanInfo = async (challanNumber: number) => {
+  try {
+    const resp = await axios.get(
+      `${process.env.VUE_APP_REHNUMA_API}/challan-info/${challanNumber}`,
+    );
+    return resp.data;
+  } catch(err) {
+    console.error('exception in getChallanInfo', err);
+    return null;
+  }
+}
+
+service.trafficUpdate = async (roadName: string) => {
+  try {
+    const resp = await axios.get(
+      `${process.env.VUE_APP_REHNUMA_API}/live-traffic-updates/${roadName}`,
+    );
+    return resp.data;
+  } catch(err) {
+    console.error('exception in trafficUpdate', err);
+    return null;
+  }
+}
+
 export default service;
 

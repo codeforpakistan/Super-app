@@ -30,7 +30,7 @@ import { IonContent,
   IonPage,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import dataService from '../../services/DataService';
+import dataService from '../../../services/DataService';
 
 export default defineComponent({
   name: 'LicenseVerification',

@@ -113,7 +113,7 @@ export default defineComponent({
   data: function () {
     return {
       session: { accessToken: ''},
-      backButtonRoutes: ['LicenseVerification', 'Result'],
+      backButtonRoutes: ['LicenseVerification', 'ChallanInformation', 'TrafficUpdate', 'Result', 'ChallanResult', 'TrafficUpdateResult'],
       searchActive: false,
     }
   },

@@ -2,9 +2,13 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
-import LicenseVerification from '../views/partials/LicenseVerification.vue';
-import Result from '../views/partials/Result.vue';
 import Logout from '../views/partials/Logout.vue';
+import LicenseVerification from '../views/partials/LicenseVerification/LicenseVerification.vue';
+import Result from '../views/partials/LicenseVerification/Result.vue';
+import ChallanInformation from '../views/partials/ChallanInformation/ChallanInformation.vue';
+import ChallanResult from '../views/partials/ChallanInformation/Result.vue';
+import TrafficUpdate from '../views/partials/TrafficUpdate/TrafficUpdate.vue';
+import TrafficUpdateResult from '../views/partials/TrafficUpdate/Result.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -48,6 +52,32 @@ const routes: Array<RouteRecordRaw> = [
     path: '/result',
     name: 'Result',
     component: Result,
+    meta: {
+      data: null
+    }
+  },
+  {
+    path: '/challan-information',
+    name: 'ChallanInformation',
+    component: ChallanInformation,
+  },
+  {
+    path: '/challan-result',
+    name: 'ChallanResult',
+    component: ChallanResult,
+    meta: {
+      data: null
+    }
+  },
+  {
+    path: '/traffic-information',
+    name: 'TrafficUpdate',
+    component: TrafficUpdate,
+  },
+  {
+    path: '/traffic-result',
+    name: 'TrafficUpdateResult',
+    component: TrafficUpdateResult,
     meta: {
       data: null
     }

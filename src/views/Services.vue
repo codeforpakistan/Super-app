@@ -5,7 +5,7 @@
       <ion-grid class="mt2 mb1 border-bottom">
         <label class="heading-label ml1">Popular Services</label>
         <ion-row>
-          <ion-col @click="openLicenseVerification">
+          <ion-col @click="openLicenseVerification('LicenseVerification')">
             <ion-row style="display: block">
               <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
             </ion-row>
@@ -29,17 +29,17 @@
       <ion-grid class="mt1 mb1 border-bottom">
         <label class="heading-label ml1">Informational Services</label>
         <ion-row>
-          <ion-col>
+          <ion-col @click="openLicenseVerification('ChallanInformation')">
             <ion-row style="display: block">
               <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
             </ion-row>
-            <ion-label>CNIC</ion-label>
+            <ion-label>Challan Info</ion-label>
           </ion-col>
-          <ion-col>
+          <ion-col @click="openLicenseVerification('TrafficUpdate')">
             <ion-row style="display: block">
               <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
             </ion-row>
-            <ion-label>Passport</ion-label>
+            <ion-label>Traffic updates</ion-label>
           </ion-col>
           <ion-col>
             <ion-row style="display: block">
@@ -98,7 +98,7 @@ export default defineComponent({
   },
   methods: {
     openLicenseVerification: function(name: string) {
-      this.$router.push({name: 'LicenseVerification'});
+      this.$router.push({name: name});
     }
   },
   ionViewDidEnter() {

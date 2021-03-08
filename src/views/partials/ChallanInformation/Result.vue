@@ -3,46 +3,55 @@
     <ion-content :fullscreen="true">
       <div id="container">
         <!-- detail table -->
-        <div class="result-table" v-if="data.dlNumber">
-          <h5>License Details</h5>
+        <div class="result-table" v-if="data.ChallanNo">
+          <h5>Challan Details</h5>
           <div>
             <ion-row>
-              <ion-col class="heading">Name</ion-col>
-              <ion-col class="sub-heading">{{data.name}}</ion-col>
+              <ion-col class="heading">Challan Number</ion-col>
+              <ion-col class="sub-heading">{{data.ChallanNo}}</ion-col>
             </ion-row>
             <ion-row>
-              <ion-col class="heading">Father Name</ion-col>
-              <ion-col class="sub-heading">{{data.fatherName}}</ion-col>
+              <ion-col class="heading">Amount</ion-col>
+              <ion-col style="color: red;" class="sub-heading">{{data.Amount}}</ion-col>
             </ion-row>
             <ion-row>
-              <ion-col class="heading">CNIC Number</ion-col>
-              <ion-col class="sub-heading">{{data.cnic}}</ion-col>
+              <ion-col class="heading">Challan Status</ion-col>
+              <ion-col class="sub-heading">
+                <span v-if="data.ChallanStatus === 'Paid'" style="color: green;">{{data.ChallanStatus}}</span>
+                <span v-if="data.ChallanStatus !== 'Paid'" style="color: red;">{{data.ChallanStatus}}</span>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="heading">Creation Date</ion-col>
+              <ion-col class="sub-heading">{{data.CreationDate}}</ion-col>
             </ion-row>
             <ion-row>
               <ion-col class="heading">District</ion-col>
-              <ion-col class="sub-heading">{{data.district}}</ion-col>
+              <ion-col class="sub-heading">{{data.District}}</ion-col>
             </ion-row>
             <ion-row>
-              <ion-col class="heading">License Number</ion-col>
-              <ion-col class="sub-heading">{{data.dlNumber}}</ion-col>
+              <ion-col class="heading">Name</ion-col>
+              <ion-col class="sub-heading">{{data.Name}}</ion-col>
             </ion-row>
             <ion-row>
-              <ion-col class="heading">License Type</ion-col>
-              <ion-col class="sub-heading">{{data.licenseType}}</ion-col>
+              <ion-col class="heading">Payment Date</ion-col>
+              <ion-col class="sub-heading">{{data.PaymentDate}}</ion-col>
             </ion-row>
+            <!-- <ion-row>
+              <ion-col class="heading">Status</ion-col>
+              <ion-col class="sub-heading">{{data.Status}}</ion-col>
+            </ion-row> -->
             <ion-row>
-              <ion-col class="heading">Issue Date</ion-col>
-              <ion-col class="sub-heading">{{data.issueDate}}</ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col class="heading">Expiry Date</ion-col>
-              <ion-col class="sub-heading">{{data.licenseExpiryDate}}</ion-col>
+              <ion-col class="heading">Violation Name</ion-col>
+              <ion-col class="sub-heading">{{data.ViolationName}}</ion-col>
             </ion-row>
           </div>
         </div>
-        <div class="home-btn" v-if="data.dlNumber">
+        <div class="home-btn" v-if="data.ChallanNo">
           <ion-button href="/">
-            <ion-icon slot="start" :icon="arrowBack"></ion-icon>
+            <ion-icon :icon="arrowBack">
+              <slot name="start"></slot>
+            </ion-icon>
             Home Page
           </ion-button>
         </div>
@@ -59,7 +68,7 @@ import { defineComponent } from 'vue';
 import { arrowBack } from 'ionicons/icons';
 
 export default defineComponent({
-  name: 'Result',
+  name: 'ChallanResult',
   components: {
     IonContent,
     IonPage,
@@ -78,6 +87,7 @@ export default defineComponent({
     try {
       if (this.$route.params.data) {
         this.data = JSON.parse(this.$route.params.data.toString());
+        console.log(' this.data',  this.data);
       }
     } catch(err) {
       console.error('error parsing data', err);
