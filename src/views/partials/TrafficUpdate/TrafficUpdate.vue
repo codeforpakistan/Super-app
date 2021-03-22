@@ -62,6 +62,12 @@ export default defineComponent({
       this.error = '';
       try {
         const resp: any = await dataService.trafficUpdate(this.selectedRoad);
+        if (resp.message === 'access_denied') {
+          await dataService.logoutSessionExpired();
+          setTimeout(() => {
+            this.$router.replace('Logout');
+          }, 3000);
+        }
         if (resp.status) {
           this.data = {
             routeName: resp.data[0].route_name,

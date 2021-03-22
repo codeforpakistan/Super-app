@@ -50,6 +50,12 @@ export default defineComponent({
       this.data = {};
       this.invalidLicense = false;
       const resp: any = await dataService.getLicenseDetails(this.cnic);
+      if (resp.message === 'access_denied') {
+        await dataService.logoutSessionExpired();
+        setTimeout(() => {
+          this.$router.replace('Logout');
+        }, 3000);
+      }
       if (resp.error === '0') {
         const body = JSON.parse(resp.LICENSE_DATA);
         this.data = {

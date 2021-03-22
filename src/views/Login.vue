@@ -25,7 +25,7 @@ export default defineComponent({
   methods: {
     doPehchanLogin: function() {
       // for browser
-      // localStorage.setItem('accessToken', 'data.token.access_token'); // for web dev
+      // localStorage.setItem('accessToken', 'iFC_RjCUFer0r_iLK2taWeo1AB6D8xUl3pfTapSvL0Q.OWbWw1QOEkRrxpq9TomyCDkuVk0WkyjD1rImhvM7Xt4'); // for web dev
       const loginApp = InAppBrowser.create('https://oauth.pehchaan.kpgov.tech/oauth2/code', '_blank', 'location=no, hidden=no, clearcache=yes');
       loginApp.on('exit').subscribe(event => {
         console.log('inAppBrowser is closed now', event);

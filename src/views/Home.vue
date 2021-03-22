@@ -73,6 +73,7 @@ export default defineComponent({
     console.log('Home page did enter', process.env.VUE_APP_REHNUMA_API);
     const token = localStorage.getItem('accessToken');
     this.session.accessToken = token || '';
+    // validate accessToken and logout if expired.
     if (token) {
       this.$router.push({name: 'Services'});
     }

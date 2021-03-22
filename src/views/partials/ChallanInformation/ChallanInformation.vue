@@ -50,6 +50,12 @@ export default defineComponent({
       this.error = false;
       try {
         const resp: any = await dataService.getChallanInfo(this.challanNumber);
+        if (resp.message === 'access_denied') {
+          await dataService.logoutSessionExpired();
+          setTimeout(() => {
+            this.$router.replace('Logout');
+          }, 3000);
+        }
         if (resp.Status !== 'Challan Not Found') {
           this.data = {
             Amount: resp.Amount,

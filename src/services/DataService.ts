@@ -1,11 +1,28 @@
 import axios from 'axios';
 const service: any = {};
+import { toastController } from '@ionic/vue';
+
+service.logoutSessionExpired = async () => {
+  try {
+    const toast = await toastController.create({
+      message: 'Your session has expired, Please login again.',
+      duration: 3000
+    });
+    return toast.present();
+  } catch (err) {
+    console.error('exception in logoutSessionExpired', err);
+    return null;
+  }
+}
 
 service.getLicenseDetails = async (cnic: string) => {
   try {
-    const resp = await axios.post(
-      `${process.env.VUE_APP_REHNUMA_API}/get-license`,
-      { cnic }
+    const headers = {
+      'Token': localStorage.getItem('accessToken'),
+      'Scopes': 'na'
+    };
+    const resp = await axios.get(
+      `${process.env.VUE_APP_REHNUMA_API}/get-license/${cnic}`, { headers }
     );
     return resp.data;
   } catch(err) {
@@ -16,8 +33,12 @@ service.getLicenseDetails = async (cnic: string) => {
 
 service.getChallanInfo = async (challanNumber: number) => {
   try {
+    const headers = {
+      'Token': localStorage.getItem('accessToken'),
+      'Scopes': 'na'
+    };
     const resp = await axios.get(
-      `${process.env.VUE_APP_REHNUMA_API}/challan-info/${challanNumber}`,
+      `${process.env.VUE_APP_REHNUMA_API}/challan-info/${challanNumber}`, { headers }
     );
     return resp.data;
   } catch(err) {
@@ -28,8 +49,12 @@ service.getChallanInfo = async (challanNumber: number) => {
 
 service.trafficUpdate = async (roadName: string) => {
   try {
+    const headers = {
+      'Token': localStorage.getItem('accessToken'),
+      'Scopes': 'na'
+    };
     const resp = await axios.get(
-      `${process.env.VUE_APP_REHNUMA_API}/live-traffic-updates/${roadName}`,
+      `${process.env.VUE_APP_REHNUMA_API}/live-traffic-updates/${roadName}`, { headers }
     );
     return resp.data;
   } catch(err) {
