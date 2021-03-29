@@ -32,6 +32,7 @@ import { IonContent,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { calendar, personCircle, bookOutline } from 'ionicons/icons';
+import dataService from '../services/DataService';
 
 export default defineComponent({
   name: 'Home',
@@ -69,13 +70,24 @@ export default defineComponent({
       return name === this.$route.name;
     }
   },
-  ionViewDidEnter() {
+  async ionViewDidEnter() {
     console.log('Home page did enter', process.env.VUE_APP_REHNUMA_API);
     const token = localStorage.getItem('accessToken');
     this.session.accessToken = token || '';
-    // validate accessToken and logout if expired.
     if (token) {
-      this.$router.push({name: 'Services'});
+      try {
+        // validate accessToken and logout if expired.
+        const resp: any = await dataService.tokenIntrospection();
+        console.log('resp', resp);
+        if (resp && resp.active) {
+          this.$router.push({name: 'Services'});
+        } else {
+          this.$router.replace('Logout');
+        }
+      } catch(err) {
+        console.error('error validating token', err);
+        this.$router.replace('Logout');
+      }
     }
   },
 });

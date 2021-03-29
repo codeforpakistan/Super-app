@@ -63,5 +63,21 @@ service.trafficUpdate = async (roadName: string) => {
   }
 }
 
+service.tokenIntrospection = async () => {
+  try {
+    const headers = {
+      'Token': localStorage.getItem('accessToken'),
+      'Scopes': 'na'
+    };
+    const resp = await axios.get(
+      `${process.env.VUE_APP_REHNUMA_API}/token-introspection`, { headers }
+    );
+    return resp.data;
+  } catch(err) {
+    console.error('exception in tokenIntrospection', err);
+    return null;
+  }
+};
+
 export default service;
 
