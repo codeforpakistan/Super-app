@@ -35,7 +35,7 @@
             </ion-row>
             <ion-label>Challan Info</ion-label>
           </ion-col>
-          <ion-col @click="openLicenseVerification('TrafficUpdate')">
+          <ion-col>
             <ion-row style="display: block">
               <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
             </ion-row>

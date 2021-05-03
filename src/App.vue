@@ -180,4 +180,7 @@ export default defineComponent({
     padding: 0 !important;
     margin-top: 0px !important;
   }
+  .home-btn {
+    text-align: center;
+  }
 </style>

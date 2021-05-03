@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "965102146293",
+    "project_id": "superapp-62f60",
+    "storage_bucket": "superapp-62f60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965102146293:android:15293dee5e791b29f52bbc",
+        "android_client_info": {
+          "package_name": "org.codeforpakistan.pehchan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "965102146293-ou35mc6sqg04gkdk60jig3jcqag5f5vr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGqXaQCG-OGPf-MtDN4bdOiPWMEYLOgOk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "965102146293-ou35mc6sqg04gkdk60jig3jcqag5f5vr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

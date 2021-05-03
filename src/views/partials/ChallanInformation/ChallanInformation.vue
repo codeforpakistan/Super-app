@@ -2,7 +2,7 @@
   <ion-page>
     <ion-content :fullscreen="true">
       <div id="container">
-         <ion-card>
+         <ion-card style="box-shadow: none;">
           <ion-card-header>
             <ion-card-title style="font-size: 1.3rem;">Challan Information</ion-card-title>
           </ion-card-header>
@@ -20,6 +20,7 @@
           </ion-row>
         </div>
       </div>
+      <TabularResult :jsonData="data" v-if="data.ChallanNo" />
     </ion-content>
   </ion-page>
 </template>
@@ -30,12 +31,14 @@ import { IonContent,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import dataService from '../../../services/DataService';
+import TabularResult from '../TabularResult.vue';
 
 export default defineComponent({
   name: 'ChallanInformation',
   components: {
     IonContent,
     IonPage,
+    TabularResult
   },
   data() {
     return {
@@ -49,7 +52,10 @@ export default defineComponent({
       this.data = {};
       this.error = false;
       try {
-        const resp: any = await dataService.getChallanInfo(this.challanNumber);
+        let resp: any = await dataService.getChallanInfo(this.challanNumber);
+        if (resp.ChallanDetailViewModel) {
+          resp = resp.ChallanDetailViewModel;
+        }
         if (resp.message === 'access_denied') {
           await dataService.logoutSessionExpired();
           setTimeout(() => {
@@ -68,8 +74,7 @@ export default defineComponent({
             Status: resp.Status,
             ViolationName: (resp.ViolationName && Array.isArray(resp.ViolationName)) ? resp.ViolationName.map((x: any)=> x.Name).join() : '',
           };
-          console.log('resp', resp);
-          this.$router.push({ name: 'ChallanResult', params: { data: JSON.stringify(this.data) } });
+          // this.$router.push({ name: 'ChallanResult', params: { data: JSON.stringify(this.data) } });
         } else {
           this.error = true
         }
@@ -91,11 +96,9 @@ h1 {
 
 #container {
   text-align: center;
-  position: absolute;
   left: 0;
   right: 0;
-  top: 35%;
-  transform: translateY(-35%);
+  margin-top: 90px;
 }
 
 #container strong {
@@ -106,9 +109,7 @@ h1 {
 #container p {
   font-size: 16px;
   line-height: 22px;
-  
   color: #8c8c8c;
-  
   margin: 0;
 }
 

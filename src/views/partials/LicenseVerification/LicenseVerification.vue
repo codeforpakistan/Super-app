@@ -2,7 +2,7 @@
   <ion-page>
     <ion-content :fullscreen="true">
       <div id="container">
-         <ion-card>
+         <ion-card style="box-shadow: none;">
           <ion-card-header>
             <!-- <ion-card-subtitle>License Verification</ion-card-subtitle> -->
             <ion-card-title style="font-size: 1.3rem;">License Verification</ion-card-title>
@@ -21,6 +21,7 @@
           </ion-row>
         </div>
       </div>
+      <TabularResult :jsonData="data" v-if="data.cnic" />
     </ion-content>
   </ion-page>
 </template>
@@ -31,12 +32,14 @@ import { IonContent,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import dataService from '../../../services/DataService';
+import TabularResult from '../TabularResult.vue';
 
 export default defineComponent({
   name: 'LicenseVerification',
   components: {
     IonContent,
     IonPage,
+    TabularResult,
   },
   data() {
     return {
@@ -68,7 +71,6 @@ export default defineComponent({
           issueDate: body.issue_date,
           district: body.district
         };
-        this.$router.push({ name: 'Result', params: { data: JSON.stringify(this.data) } });
       } else {
         this.invalidLicense = true
       }
@@ -86,11 +88,9 @@ h1 {
 
 #container {
   text-align: center;
-  position: absolute;
   left: 0;
   right: 0;
-  top: 35%;
-  transform: translateY(-35%);
+  margin-top: 90px;
 }
 
 #container strong {

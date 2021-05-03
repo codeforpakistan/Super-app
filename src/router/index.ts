@@ -4,9 +4,7 @@ import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Logout from '../views/partials/Logout.vue';
 import LicenseVerification from '../views/partials/LicenseVerification/LicenseVerification.vue';
-import Result from '../views/partials/LicenseVerification/Result.vue';
 import ChallanInformation from '../views/partials/ChallanInformation/ChallanInformation.vue';
-import ChallanResult from '../views/partials/ChallanInformation/Result.vue';
 import TrafficUpdate from '../views/partials/TrafficUpdate/TrafficUpdate.vue';
 import TrafficUpdateResult from '../views/partials/TrafficUpdate/Result.vue';
 
@@ -49,25 +47,9 @@ const routes: Array<RouteRecordRaw> = [
     component: LicenseVerification,
   },
   {
-    path: '/result',
-    name: 'Result',
-    component: Result,
-    meta: {
-      data: null
-    }
-  },
-  {
     path: '/challan-information',
     name: 'ChallanInformation',
     component: ChallanInformation,
-  },
-  {
-    path: '/challan-result',
-    name: 'ChallanResult',
-    component: ChallanResult,
-    meta: {
-      data: null
-    }
   },
   {
     path: '/traffic-information',

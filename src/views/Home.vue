@@ -33,6 +33,14 @@ import { IonContent,
 import { defineComponent } from 'vue';
 import { calendar, personCircle, bookOutline } from 'ionicons/icons';
 import dataService from '../services/DataService';
+import {
+  Plugins,
+  PushNotification,
+  PushNotificationToken,
+  PushNotificationActionPerformed,
+} from '@capacitor/core';
+
+const { PushNotifications } = Plugins;
 
 export default defineComponent({
   name: 'Home',
@@ -68,6 +76,43 @@ export default defineComponent({
   methods: {
     isActiveTab: function(name: string) {
       return name === this.$route.name;
+    },
+    registerPushNotification: function() {
+      // Request permission to use push notifications
+      // iOS will prompt user and return if they granted permission or not
+      // Android will just grant without prompting
+      PushNotifications.requestPermission().then( result => {
+        if (result.granted) {
+          // Register with Apple / Google to receive push via APNS/FCM
+          PushNotifications.register();
+        } else {
+          // Show some error
+        }
+      });
+      // On success, we should be able to receive notifications
+      PushNotifications.addListener('registration',
+        (token: PushNotificationToken) => {
+          // alert('Push registration success, token: ' + token.value);
+        }
+      );
+      // Some issue with our setup and push will not work
+      PushNotifications.addListener('registrationError',
+        (error: any) => {
+          // alert('Error on registration: ' + JSON.stringify(error));
+        }
+      );
+      // Show us the notification payload if the app is open on our device
+      PushNotifications.addListener('pushNotificationReceived',
+        (notification: PushNotification) => {
+          alert('Push received: ' + JSON.stringify(notification));
+        }
+      );
+      // Method called when tapping on a notification
+      PushNotifications.addListener('pushNotificationActionPerformed',
+        (notification: PushNotificationActionPerformed) => {
+          alert('Push action performed: ' + JSON.stringify(notification));
+        }
+      );
     }
   },
   async ionViewDidEnter() {
@@ -82,13 +127,15 @@ export default defineComponent({
         if (resp && resp.active) {
           this.$router.push({name: 'Services'});
         } else {
-          this.$router.replace('Logout');
+          // this.$router.replace('Logout');
+          this.$router.push({name: 'Services'});
         }
       } catch(err) {
         console.error('error validating token', err);
         this.$router.replace('Logout');
       }
     }
+    this.registerPushNotification();
   },
 });
 </script>
