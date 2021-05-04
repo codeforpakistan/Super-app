@@ -1,0 +1,64 @@
+{
+  "services": [
+    {
+      "category": "Popular Services",
+      "options": [
+        {
+          "name": "License Verification",
+          "logo": "assets/icon/globe-outline.svg",
+          "route": "LicenseVerification"
+        },
+        {
+          "name": "Building Approval",
+          "logo": "assets/icon/globe-outline.svg",
+          "route": ""
+        },
+        {
+          "name": "CNIC",
+          "logo": "assets/icon/globe-outline.svg",
+          "route": ""
+        }
+      ]
+    },
+    {
+      "category": "Informational Services",
+      "options": [
+        {
+          "name": "Challan Info",
+          "logo": "assets/icon/globe-outline.svg",
+          "route": "ChallanInformation"
+        },
+        {
+          "name": "Traffic updates",
+          "logo": "assets/icon/globe-outline.svg",
+          "route": ""
+        },
+        {
+          "name": "Vehicle Registration",
+          "logo": "assets/icon/globe-outline.svg",
+          "route": ""
+        }
+      ]
+    },
+    {
+      "category": "Transactional Services",
+      "options": [
+        {
+          "name": "Water Bill",
+          "logo": "assets/icon/globe-outline.svg",
+          "route": ""
+        },
+        {
+          "name": "Gas Bill",
+          "logo": "assets/icon/globe-outline.svg",
+          "route": ""
+        },
+        {
+          "name": "Telephone Bill",
+          "logo": "assets/icon/globe-outline.svg",
+          "route": ""
+        }
+      ]
+    }
+  ]
+}

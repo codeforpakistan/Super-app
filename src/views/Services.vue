@@ -1,75 +1,14 @@
 <template>
   <ion-page>
     <ion-content>
-      <!-- Popular Services-->
-      <ion-grid class="mt2 mb1 border-bottom">
-        <label class="heading-label ml1">Popular Services</label>
+      <ion-grid v-for="serv in services" :key="serv.category" class="mt2 mb1 border-bottom">
+        <label class="heading-label ml1">{{serv.category}}</label>
         <ion-row>
-          <ion-col @click="openLicenseVerification('LicenseVerification')">
+          <ion-col v-for="opt in serv.options" :key="opt.name" @click="openPage(opt.route)">
             <ion-row style="display: block">
-              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
+              <img class="icon" style="max-width: 7em;" width="30" height="30" :src="opt.logo">
             </ion-row>
-            <ion-label>License Verification</ion-label>
-          </ion-col>
-          <ion-col>
-            <ion-row style="display: block">
-              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
-            </ion-row>
-            <ion-label>Building Approval</ion-label>
-          </ion-col>
-          <ion-col>
-            <ion-row style="display: block">
-              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
-            </ion-row>
-            <ion-label>CNIC</ion-label>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      <!-- informational Services-->
-      <ion-grid class="mt1 mb1 border-bottom">
-        <label class="heading-label ml1">Informational Services</label>
-        <ion-row>
-          <ion-col @click="openLicenseVerification('ChallanInformation')">
-            <ion-row style="display: block">
-              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
-            </ion-row>
-            <ion-label>Challan Info</ion-label>
-          </ion-col>
-          <ion-col>
-            <ion-row style="display: block">
-              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
-            </ion-row>
-            <ion-label>Traffic updates</ion-label>
-          </ion-col>
-          <ion-col>
-            <ion-row style="display: block">
-              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
-            </ion-row>
-            <ion-label>Vehicle Registration</ion-label>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      <!-- Transactional services -->
-      <ion-grid class="mt1 mb1">
-        <label class="heading-label ml1">Transactional Services</label>
-        <ion-row>
-          <ion-col>
-            <ion-row style="display: block">
-              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
-            </ion-row>
-            <ion-label>Water Bill</ion-label>
-          </ion-col>
-          <ion-col>
-            <ion-row style="display: block">
-              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
-            </ion-row>
-            <ion-label>Gas Bill</ion-label>
-          </ion-col>
-          <ion-col>
-            <ion-row style="display: block">
-              <img class="icon" style="max-width: 7em;" width="30" height="30" src="assets/icon/globe-outline.svg">
-            </ion-row>
-            <ion-label>Telephone Bill</ion-label>
+            <ion-label>{{opt.name}}</ion-label>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -80,6 +19,7 @@
 <script lang="ts">
 import { IonContent, IonPage, IonRow, IonCol, IonGrid, IonLabel } from '@ionic/vue';
 import { defineComponent } from 'vue';
+import servicesJson from "../uiconfig/services.json";
 
 export default defineComponent({
   name: 'Services',
@@ -94,32 +34,34 @@ export default defineComponent({
   data: function () {
     return {
       somekey: '',
+      services: servicesJson.services
     }
   },
   methods: {
-    openLicenseVerification: function(name: string) {
-      this.$router.push({name: name});
+    openPage: function(name: string) {
+      if (name) {
+        this.$router.push({name: name});
+      }
     }
   },
   ionViewDidEnter() {
-    console.log('Services page did enter');
+    console.log('Services page did enter', this.services);
   }
 });
 </script>
 <style scoped>
-.ion-page {
-  padding: 0px 10px;
-}
-.heading-label {
-  font-weight: 500;
-}
-.border-bottom {
-  border-bottom: .5px solid gainsboro;
-}
-ion-col {
-  padding: 15px;
-  font-size: .9rem;
-  text-align: center;
-}
-
+  .ion-page {
+    padding: 0px 10px;
+  }
+  .heading-label {
+    font-weight: 500;
+  }
+  .border-bottom {
+    border-bottom: .5px solid gainsboro;
+  }
+  ion-col {
+    padding: 15px;
+    font-size: .9rem;
+    text-align: center;
+  }
 </style>
