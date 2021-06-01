@@ -25,8 +25,8 @@ export default defineComponent({
   methods: {
     doPehchanLogin: function() {
       // for browser
-      // localStorage.setItem('accessToken', 'THkcaLlYGIOzHHPFUGkptZDPeZXYERMLXrs4D8L5Axs.p1RivEYkw8W5BLdhAbQmsZFw0tmk2KDZpT7AAUFa_6U'); // for web dev
-      const loginApp = InAppBrowser.create('https://oauth.pehchaan.kpgov.tech/oauth2/code', '_blank', 'location=no, hidden=no, clearcache=yes');
+      // localStorage.setItem('accessToken', 'GiFEVrgHZRvfEotmbIYGCOBrGux-gueOcnBnEQxPJPU.ceS7URa0BMeXRAcjUutGA59sgL91e_xN-Hml3ow3c5s'); // for web dev
+      const loginApp = InAppBrowser.create('https://oauth.pehchaan.kpgov.tech/oauth2/code', '_blank', 'location=yes,hidden=no,clearcache=yes,enableViewportScale=no,hidenavigationbuttons=no,zoom=no');
       loginApp.on('exit').subscribe(event => {
         console.log('inAppBrowser is closed now', event);
       });

@@ -30,7 +30,7 @@
         <ion-icon slot="start" class="md-icon" :icon="logOut"></ion-icon>
         </ion-button>
       </ion-buttons>
-      <ion-title v-if="!searchActive">Super App</ion-title>
+      <ion-title class="app-title" v-if="!searchActive && hasSession">Super App</ion-title>
     </ion-toolbar>
     <!-- side menu -->
     <ion-menu side="start" menu-id="first" content-id="main">
@@ -182,5 +182,8 @@ export default defineComponent({
   }
   .home-btn {
     text-align: center;
+  }
+  .app-title {
+    padding: 0 !important;
   }
 </style>
