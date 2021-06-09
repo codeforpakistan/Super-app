@@ -24,10 +24,10 @@
 <script lang="ts">
 import { IonContent,
   IonPage,
-  IonIcon, 
-  IonLabel, 
-  IonTabBar, 
-  IonTabButton, 
+  IonIcon,
+  IonLabel,
+  IonTabBar,
+  IonTabButton,
   IonTabs,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
@@ -71,6 +71,7 @@ export default defineComponent({
   data: function () {
     return {
       session: {accessToken: ''},
+      appVersion: '',
     }
   },
   methods: {

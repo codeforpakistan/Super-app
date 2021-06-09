@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">test_app</string>
-    <string name="title_activity_main">test_app</string>
+    <string name="app_name">KP Super App</string>
+    <string name="title_activity_main">KP Super App</string>
     <string name="package_name">org.codeforpakistan.pehchan</string>
     <string name="custom_url_scheme">org.codeforpakistan.pehchan</string>
 </resources>

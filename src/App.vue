@@ -50,6 +50,11 @@
           <ion-item href="/logout"><ion-icon slot="start" class="sm-icon" :icon="logOut"></ion-icon>Logout</ion-item>
         </ion-list>
       </ion-content>
+      <ion-footer>
+        <ion-toolbar>
+          <ion-title style="color: #616161; padding-left: 20px; font-weight: 500; font-size: .8rem;">KP Super APP <br /> {{getAppVersion()}} Version {{appVersion}}</ion-title>
+        </ion-toolbar>
+      </ion-footer>
     </ion-menu>
     <!-- router -->
     <ion-router-outlet id="main" />
@@ -67,6 +72,10 @@ import { IonApp, IonRouterOutlet, IonToolbar, IonButton,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { home, personCircle, informationCircle, lockClosed, logOut, arrowBack, search, close } from 'ionicons/icons';
+import { useBackButton, useIonRouter } from '@ionic/vue';
+import { Plugins } from '@capacitor/core';
+const { App } = Plugins;
+import { AppVersion } from '@ionic-native/app-version';
 
 export default defineComponent({
   name: 'App',
@@ -84,6 +93,12 @@ export default defineComponent({
     IonSearchbar,
   },
   setup() {
+    const ionRouter = useIonRouter();
+    useBackButton(-1, () => {
+      if (!ionRouter.canGoBack()) {
+        App.exitApp();
+      }
+    });
     return {
       home,
       personCircle,
@@ -108,13 +123,22 @@ export default defineComponent({
     },
     toggleSearchBar: function() {
       this.searchActive = !this.searchActive;
-    }
+    },
+    getAppVersion: function() {
+      AppVersion.getVersionNumber().then(version => {
+        console.log('AAAAPP');
+        console.log(version);
+        this.appVersion = version;
+      });
+      return '';
+    },
   },
   data: function () {
     return {
       session: { accessToken: ''},
-      backButtonRoutes: ['LicenseVerification', 'ChallanInformation', 'TrafficUpdate', 'Result', 'ChallanResult', 'TrafficUpdateResult'],
+      backButtonRoutes: ['LicenseVerification', 'ChallanInformation', 'TrafficUpdate', 'TrafficUpdateResult'],
       searchActive: false,
+      appVersion: '',
     }
   },
   computed: {
