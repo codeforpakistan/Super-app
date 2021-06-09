@@ -126,8 +126,6 @@ export default defineComponent({
     },
     getAppVersion: function() {
       AppVersion.getVersionNumber().then(version => {
-        console.log('AAAAPP');
-        console.log(version);
         this.appVersion = version;
       });
       return '';
