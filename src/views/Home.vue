@@ -71,7 +71,6 @@ export default defineComponent({
   data: function () {
     return {
       session: {accessToken: ''},
-      appVersion: '',
     }
   },
   methods: {

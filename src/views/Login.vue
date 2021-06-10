@@ -6,6 +6,7 @@
         <h1>Super App</h1>
         <ion-button v-if="!url" class="mt1 btn-green" @click="doPehchanLogin">Log in with Pehchan</ion-button>
       </div>
+      <p class="app-version">KP Super App <br /> {{getAppVersion()}} Version {{appVersion}}</p>
     </ion-content>
   </ion-page>
 </template>
@@ -14,6 +15,7 @@
 import { IonContent, IonPage, IonButton } from '@ionic/vue';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { defineComponent } from 'vue';
+import { AppVersion } from '@ionic-native/app-version';
 
 export default defineComponent({
   name: 'Login',
@@ -66,12 +68,19 @@ export default defineComponent({
           });
         }
       });
-    }
+    },
+    getAppVersion: function() {
+      AppVersion.getVersionNumber().then(version => {
+        this.appVersion = version;
+      });
+      return '';
+    },
   },
   data: function () {
     return {
       token: '',
       session: null,
+      appVersion: '',
     }
   }
 });
@@ -107,5 +116,15 @@ h1 {
 
 #container a {
   text-decoration: none;
+}
+
+.app-version {
+  color: #616161;
+  font-weight: 500;
+  font-size: .8rem;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  bottom:0;
 }
 </style>

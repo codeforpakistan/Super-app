@@ -52,7 +52,7 @@
       </ion-content>
       <ion-footer>
         <ion-toolbar>
-          <ion-title style="color: #616161; padding-left: 20px; font-weight: 500; font-size: .8rem;">KP Super APP <br /> {{getAppVersion()}} Version {{appVersion}}</ion-title>
+          <ion-title style="color: #616161; padding-left: 20px; font-weight: 500; font-size: .8rem;">KP Super App <br /> {{getAppVersion()}} Version {{appVersion}}</ion-title>
         </ion-toolbar>
       </ion-footer>
     </ion-menu>
