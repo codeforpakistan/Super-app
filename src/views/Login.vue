@@ -2,7 +2,7 @@
   <ion-page>
     <ion-content :fullscreen="true">
       <div id="container">
-        <img style="max-width: 7em;" src="assets/superapplogo.png">
+        <img style="max-width: 7em;" src="assets/icon.png">
         <h1>Super App</h1>
         <ion-button v-if="!url" class="mt1 btn-green" @click="doPehchanLogin">Log in with Pehchan</ion-button>
       </div>
@@ -27,7 +27,7 @@ export default defineComponent({
   methods: {
     doPehchanLogin: function() {
       // for browser
-      // localStorage.setItem('accessToken', 'GiFEVrgHZRvfEotmbIYGCOBrGux-gueOcnBnEQxPJPU.ceS7URa0BMeXRAcjUutGA59sgL91e_xN-Hml3ow3c5s'); // for web dev
+      // localStorage.setItem('accessToken', 'qDIC5sbeJBT-nVKuQQiq8lPIXJLBI_2zdnaSU3v3938.8WHpkLSi-0ogSc-6ZQoVE4StJ50M-LKGEzkXSWNZMYw'); // for web dev
       const loginApp = InAppBrowser.create('https://oauth.pehchaan.kpgov.tech/oauth2/code', '_blank', 'location=yes,hidden=no,clearcache=yes,enableViewportScale=no,hidenavigationbuttons=no,zoom=no');
       loginApp.on('exit').subscribe(event => {
         console.log('inAppBrowser is closed now', event);

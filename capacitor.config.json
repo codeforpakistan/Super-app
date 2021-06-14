@@ -1,6 +1,6 @@
 {
-  "appId": "org.codeforpakistan.pehchan",
-  "appName": "Super App",
+  "appId": "org.codeforpakistan.rehnuma",
+  "appName": "KP Super App",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "dist",
