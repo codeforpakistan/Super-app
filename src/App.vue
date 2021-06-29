@@ -36,7 +36,9 @@
     <ion-menu side="start" menu-id="first" content-id="main">
       <ion-header>
         <ion-toolbar class="menu-header" color="primary">
-          <ion-title style="color: white;">Ali Ahmad</ion-title>
+          <ion-title style="color: #fff;">
+            <span v-if="appUser && appUser.nic">NIC: {{appUser.nic}}</span>
+          </ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>
@@ -52,7 +54,7 @@
       </ion-content>
       <ion-footer>
         <ion-toolbar>
-          <ion-title style="color: #616161; padding-left: 20px; font-weight: 500; font-size: .8rem;">KP Super App <br /> {{getAppVersion()}} Version {{appVersion}}</ion-title>
+          <ion-title style="color: #616161; padding-left: 40px; font-weight: 500; font-size: .8rem;">KP Super App <br /> {{getAppVersion()}} Version {{appVersion}}</ion-title>
         </ion-toolbar>
       </ion-footer>
     </ion-menu>
@@ -76,6 +78,8 @@ import { useBackButton, useIonRouter } from '@ionic/vue';
 import { Plugins } from '@capacitor/core';
 const { App } = Plugins;
 import { AppVersion } from '@ionic-native/app-version';
+import { User }  from './models/user';
+import dataService from './services/DataService';
 
 export default defineComponent({
   name: 'App',
@@ -128,7 +132,46 @@ export default defineComponent({
       AppVersion.getVersionNumber().then(version => {
         this.appVersion = version;
       });
+      this.checkUserInfo();
       return '';
+    },
+    checkUserInfo: async function() {
+      try {
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+          const userString = localStorage.getItem('userInfo');
+          if (userString) {
+            this.setUserInfo(userString)
+          } else {
+            await this.getUserFromToken(token);
+          }
+        }
+      } catch(err) {
+        console.error(err);
+      }
+    },
+    setUserInfo: async function(userString: any) {
+      try {
+        if (!this.appUser || !this.appUser?.nic) {
+          const user: User = JSON.parse(userString);
+          if (user && user.id) {
+            this.appUser = user;
+            dataService.addUserInStore(this.appUser);
+          }
+        }
+      } catch(err) {
+        console.log('error', err);
+      }
+    },
+    getUserFromToken: async function(token: any) {
+      try {
+        const res = await dataService.getUserInfo(token);
+        localStorage.setItem('userInfo', JSON.stringify(res));
+        this.appUser = res;
+        dataService.addUserInStore(this.appUser);
+      } catch(err) {
+        console.log('error', err);
+      }
     },
   },
   data: function () {
@@ -137,6 +180,7 @@ export default defineComponent({
       backButtonRoutes: ['LicenseVerification', 'ChallanInformation', 'TrafficUpdate', 'TrafficUpdateResult'],
       searchActive: false,
       appVersion: '',
+      appUser: {} as User,
     }
   },
   computed: {
@@ -169,6 +213,7 @@ export default defineComponent({
   }
   ion-toolbar {
     padding: 0px 5px !important;
+    margin-top: var(--ion-safe-area-top) !important;
   }
   ion-item {
     font-size: .95rem;
@@ -205,7 +250,7 @@ export default defineComponent({
   .home-btn {
     text-align: center;
   }
-  .app-title {
-    padding: 0 !important;
+  .md .app-title {
+    padding-left: 0px !important;
   }
 </style>

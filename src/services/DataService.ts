@@ -1,6 +1,10 @@
 import axios from 'axios';
 const service: any = {};
 import { toastController } from '@ionic/vue';
+import { Storage } from '@ionic/storage';
+const store = new Storage();
+store.create();
+const AccountsKey = 'userAccounts';
 
 service.logoutSessionExpired = async () => {
   try {
@@ -15,6 +19,45 @@ service.logoutSessionExpired = async () => {
   }
 }
 
+service.clearStore = async () => {
+  store.clear();
+}
+
+service.addUserInStore = async (item: any) => {
+  try {
+    const toSave = JSON.parse(JSON.stringify(item)); 
+    toSave.token = localStorage.getItem('accessToken');
+    toSave.session = localStorage.getItem('session');
+    const current = await store.get(AccountsKey);
+    if (current && current.length > 0) {
+      const alreadyExists = current.find((x: any) => x.nic === toSave.nic);
+      if (alreadyExists) {
+        return;
+      } else {
+        current.push(toSave);
+        await store.set(AccountsKey, current);
+      }
+    } else {
+      await store.set(AccountsKey, [toSave]);
+    }
+  } catch(err) {
+    console.error('error in ionic store', err);
+  }
+}
+
+service.getUsersInStore = async () => {
+  try {
+    const current = await store.get(AccountsKey);
+    if (current && current.length > 0) {
+      return current;
+    } else {
+      return [];
+    }
+  } catch(err) {
+    console.error('error in ionic store');
+  }
+}
+ 
 service.getLicenseDetails = async (cnic: string) => {
   try {
     const headers = {
@@ -63,10 +106,10 @@ service.trafficUpdate = async (roadName: string) => {
   }
 }
 
-service.tokenIntrospection = async () => {
+service.tokenIntrospection = async (token = '') => {
   try {
     const headers = {
-      'Token': localStorage.getItem('accessToken'),
+      'Token': token || localStorage.getItem('accessToken'),
       'Scopes': 'na'
     };
     const resp = await axios.get(
@@ -78,6 +121,21 @@ service.tokenIntrospection = async () => {
     return null;
   }
 };
+
+service.getUserInfo = async (token: any) => {
+  try {
+    const headers = {
+      'access_token': token
+    };
+    const resp = await axios.get(
+      `https://consent.pehchaan.kpgov.tech/usersinfo`, { headers }
+    );
+    return resp.data;
+  } catch(err) {
+    console.error('exception in getUserInfo', err);
+    return null;
+  }
+}
 
 export default service;
 

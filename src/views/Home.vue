@@ -142,7 +142,7 @@ export default defineComponent({
 
 <style scoped>
 ion-tab-bar{
-  margin-top: 50px;
+  margin-top: calc(60px + var(--ion-safe-area-top));
   padding-bottom: 10px;
 }
 .active-tab {

@@ -5,6 +5,21 @@
         <img style="max-width: 7em;" src="assets/icon.png">
         <h1>Super App</h1>
         <ion-button v-if="!url" class="mt1 btn-green" @click="doPehchanLogin">Log in with Pehchan</ion-button>
+        <!-- account selection -->
+        <div class="mt2" style="padding: 0px 10px;" v-if="accounts && accounts.length > 0" >
+          <ion-label>
+            <h4>OR</h4>
+            <h4 class="mt3">Choose an existing account</h4>
+          </ion-label>
+          <ion-item>
+            <ion-label>NIC</ion-label>
+            <ion-select placeholder="Select One" :value="selectedAccount" 
+              @ionChange="selectedAccount= $event.target.value">
+              <ion-select-option v-for="acc in accounts" :key="acc.nic" :value="acc.nic">{{acc.nic}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-button v-if="selectedAccount" @click="doExistingAccountLogin" class="mt2" style="width: 50%;">Next</ion-button>
+        </div>
       </div>
       <p class="app-version">KP Super App <br /> {{getAppVersion()}} Version {{appVersion}}</p>
     </ion-content>
@@ -16,6 +31,7 @@ import { IonContent, IonPage, IonButton } from '@ionic/vue';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { defineComponent } from 'vue';
 import { AppVersion } from '@ionic-native/app-version';
+import dataService from '../services/DataService';
 
 export default defineComponent({
   name: 'Login',
@@ -27,7 +43,7 @@ export default defineComponent({
   methods: {
     doPehchanLogin: function() {
       // for browser
-      // localStorage.setItem('accessToken', 'qDIC5sbeJBT-nVKuQQiq8lPIXJLBI_2zdnaSU3v3938.8WHpkLSi-0ogSc-6ZQoVE4StJ50M-LKGEzkXSWNZMYw'); // for web dev
+      // localStorage.setItem('accessToken', 'nchTfX2_Bv1Wte9Q-OLB2IiZy3LiS5I-fkRxoGShesg.4eCDVF018l3fZBYbUtFWD62it0EQSnEJIeJSK6XNW3A'); // for web dev
       const loginApp = InAppBrowser.create('https://oauth.pehchaan.kpgov.tech/oauth2/code', '_blank', 'location=yes,hidden=no,clearcache=yes,enableViewportScale=no,hidenavigationbuttons=no,zoom=no');
       loginApp.on('exit').subscribe(event => {
         console.log('inAppBrowser is closed now', event);
@@ -46,7 +62,7 @@ export default defineComponent({
           console.log('executing script in inapp browser');
           loginApp.executeScript({
             code: 'document.getElementsByTagName("pre")[0].innerHTML'
-          }).then(html => {
+          }).then(async html => {
             console.log('got the html', html);
             try {
               const data = JSON.parse(html);
@@ -69,10 +85,38 @@ export default defineComponent({
         }
       });
     },
+    doExistingAccountLogin: async function() {
+      const found: any = this.accounts.find((x: any) => x.nic === this.selectedAccount);
+      if (found) {
+        console.log(found.token);
+        try {
+          const resp: any = await dataService.tokenIntrospection(found.token);
+          if (resp && resp.active) {
+            localStorage.setItem('session', found.session);
+            localStorage.setItem('accessToken', found.token);
+            window.location.reload();
+          } else {
+            this.doPehchanLogin();
+          }
+        } catch(err) {
+          console.error('error validating token', err);
+          this.doPehchanLogin();
+        }
+      } else {
+        this.doPehchanLogin();
+      }
+    },
     getAppVersion: function() {
       AppVersion.getVersionNumber().then(version => {
         this.appVersion = version;
+        return this.appVersion;
       });
+      if (!this.accounts || this.accounts?.length == 0) {
+      dataService.getUsersInStore().then((res: any) => {
+          this.accounts = res;
+          console.log('userAaccount', this.accounts);
+        });
+      }
       return '';
     },
   },
@@ -81,6 +125,8 @@ export default defineComponent({
       token: '',
       session: null,
       appVersion: '',
+      accounts: [],
+      selectedAccount: '',
     }
   }
 });
@@ -98,7 +144,7 @@ h1 {
   position: absolute;
   left: 0;
   right: 0;
-  top: 40%;
+  top: 35%;
   transform: translateY(-40%);
 }
 

@@ -24,6 +24,7 @@ export default defineComponent({
   ionViewDidEnter() {
     localStorage.removeItem('session');
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('userInfo');
     this.$router.replace('Login');
     window.location.reload();
   },
