@@ -60,6 +60,7 @@ service.getUsersInStore = async () => {
  
 service.getLicenseDetails = async (cnic: string) => {
   try {
+    console.log('process.env.VUE_APP_REHNUMA_API', process.env.VUE_APP_REHNUMA_API);
     const headers = {
       'Token': localStorage.getItem('accessToken'),
       'Scopes': 'na'
@@ -76,6 +77,7 @@ service.getLicenseDetails = async (cnic: string) => {
 
 service.getChallanInfo = async (challanNumber: number) => {
   try {
+    console.log('process.env.VUE_APP_REHNUMA_API', process.env.VUE_APP_REHNUMA_API);
     const headers = {
       'Token': localStorage.getItem('accessToken'),
       'Scopes': 'na'
@@ -124,13 +126,20 @@ service.tokenIntrospection = async (token = '') => {
 
 service.getUserInfo = async (token: any) => {
   try {
-    const headers = {
-      'access_token': token
-    };
-    const resp = await axios.get(
-      `https://consent.pehchaan.kpgov.tech/usersinfo`, { headers }
-    );
-    return resp.data;
+    // const headers = {
+    //   'access_token': token
+    // };
+    // const resp = await axios.get(
+    //   `https://consent.pehchaan.kpgov.tech/usersinfo`, { headers }
+    // );
+    // return resp.data;
+    return {
+      email: "demo@test.com",
+      id: 1,
+      name: "Demo User",
+      nic: "61101982832211",
+      phone: "03001345678"
+    }
   } catch(err) {
     console.error('exception in getUserInfo', err);
     return null;

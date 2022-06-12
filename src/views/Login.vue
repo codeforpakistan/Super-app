@@ -43,68 +43,72 @@ export default defineComponent({
   methods: {
     doPehchanLogin: function() {
       // for browser
-      // localStorage.setItem('accessToken', 'nchTfX2_Bv1Wte9Q-OLB2IiZy3LiS5I-fkRxoGShesg.4eCDVF018l3fZBYbUtFWD62it0EQSnEJIeJSK6XNW3A'); // for web dev
-      const loginApp = InAppBrowser.create('https://oauth.pehchaan.kpgov.tech/oauth2/code', '_blank', 'location=yes,hidden=no,clearcache=yes,enableViewportScale=no,hidenavigationbuttons=no,zoom=no');
-      loginApp.on('exit').subscribe(event => {
-        console.log('inAppBrowser is closed now', event);
-      });
-      loginApp.on('loadstart').subscribe(event => {
-        // close the browser when user cancels the login/signup process
-        const closeBrowserURL = 'https://oauth.pehchaan.kpgov.tech/cancel-auth';
-        if (event.url.includes(closeBrowserURL)) {
-          loginApp.close();
-        }
-      });
-      loginApp.on('loadstop').subscribe(event => {
-        console.log('loadstop called', event);
-        const callBackURL = 'https://oauth.pehchaan.kpgov.tech/callback?code=';
-        if (event.url.includes(callBackURL) && event.url.length > callBackURL.length) {
-          console.log('executing script in inapp browser');
-          loginApp.executeScript({
-            code: 'document.getElementsByTagName("pre")[0].innerHTML'
-          }).then(async html => {
-            console.log('got the html', html);
-            try {
-              const data = JSON.parse(html);
-              console.log(data.token);
-              this.session = data.token;
-              if (this.session) {
-                localStorage.setItem('session', JSON.stringify(this.session));
-                localStorage.setItem('accessToken', data.token.access_token);
-              }
-            } catch(err) {
-              console.error('error parsing the html data', err);
-            }
-            loginApp.close();
-            if (this.session) {
-              console.log('want to redirect');
-              this.$router.replace('Home');
-              window.location.reload();
-            }
-          });
-        }
-      });
+      localStorage.setItem('accessToken', 'nchTfX2_Bv1Wte9Q-OLB2IiZy3LiS5I-fkRxoGShesg.4eCDVF018l3fZBYbUtFWD62it0EQSnEJIeJSK6XNW3A'); // for web dev
+      this.$router.replace('Home');
+      window.location.reload();
+      
+      // const loginApp = InAppBrowser.create('https://oauth.pehchaan.kpgov.tech/oauth2/code', '_blank', 'location=yes,hidden=no,clearcache=yes,enableViewportScale=no,hidenavigationbuttons=no,zoom=no');
+      // loginApp.on('exit').subscribe(event => {
+      //   console.log('inAppBrowser is closed now', event);
+      // });
+      // loginApp.on('loadstart').subscribe(event => {
+      //   // close the browser when user cancels the login/signup process
+      //   const closeBrowserURL = 'https://oauth.pehchaan.kpgov.tech/cancel-auth';
+      //   if (event.url.includes(closeBrowserURL)) {
+      //     loginApp.close();
+      //   }
+      // });
+      // loginApp.on('loadstop').subscribe(event => {
+      //   console.log('loadstop called', event);
+      //   const callBackURL = 'https://oauth.pehchaan.kpgov.tech/callback?code=';
+      //   if (event.url.includes(callBackURL) && event.url.length > callBackURL.length) {
+      //     console.log('executing script in inapp browser');
+      //     loginApp.executeScript({
+      //       code: 'document.getElementsByTagName("pre")[0].innerHTML'
+      //     }).then(async html => {
+      //       console.log('got the html', html);
+      //       try {
+      //         const data = JSON.parse(html);
+      //         console.log(data.token);
+      //         this.session = data.token;
+      //         if (this.session) {
+      //           localStorage.setItem('session', JSON.stringify(this.session));
+      //           localStorage.setItem('accessToken', data.token.access_token);
+      //         }
+      //       } catch(err) {
+      //         console.error('error parsing the html data', err);
+      //       }
+      //       loginApp.close();
+      //       if (this.session) {
+      //         console.log('want to redirect');
+      //         this.$router.replace('Home');
+      //         window.location.reload();
+      //       }
+      //     });
+      //   }
+      // });
     },
     doExistingAccountLogin: async function() {
-      const found: any = this.accounts.find((x: any) => x.nic === this.selectedAccount);
-      if (found) {
-        console.log(found.token);
-        try {
-          const resp: any = await dataService.tokenIntrospection(found.token);
-          if (resp && resp.active) {
-            localStorage.setItem('session', found.session);
-            localStorage.setItem('accessToken', found.token);
-            window.location.reload();
-          } else {
-            this.doPehchanLogin();
-          }
-        } catch(err) {
-          console.error('error validating token', err);
-          this.doPehchanLogin();
-        }
-      } else {
-        this.doPehchanLogin();
-      }
+       this.doPehchanLogin();
+      // const found: any = this.accounts.find((x: any) => x.nic === this.selectedAccount);
+      // if (found) {
+      //   console.log(found.token);
+      //   try {
+      //     const resp: any = await dataService.tokenIntrospection(found.token);
+      //     if (resp && resp.active) {
+      //       localStorage.setItem('session', found.session);
+      //       localStorage.setItem('accessToken', found.token);
+      //       window.location.reload();
+      //     } else {
+      //       this.doPehchanLogin();
+      //     }
+      //   } catch(err) {
+      //     console.error('error validating token', err);
+      //     this.doPehchanLogin();
+      //   }
+      // } else {
+      //   this.doPehchanLogin();
+      // }
     },
     getAppVersion: function() {
       AppVersion.getVersionNumber().then(version => {
